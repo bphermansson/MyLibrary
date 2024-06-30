@@ -11,6 +11,10 @@ using System.Security.Policy;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.Json;
+using System.Runtime.ConstrainedExecution;
+using System.Net.Http;
+
+// Right click on MyLibry.Test and select "Debug tests".
 
 namespace MyLibrary.Test
 {
@@ -37,8 +41,6 @@ namespace MyLibrary.Test
 			//Arrange
 			HttpClient client = new HttpClient();
 			client.BaseAddress = new Uri("https://localhost:7034/");
-
-			//Act
 			await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
 			client = application.CreateClient();
 
@@ -46,12 +48,13 @@ namespace MyLibrary.Test
 			var payload = JsonSerializer.Serialize(person);
 			var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-			// Post to the endpoint
+			//Act
 			var response = await client.PostAsync("api/Users", content);
-			
-			User? user = await client.GetFromJsonAsync<User>("api/Users/1");
-			
+			var res = await client.GetFromJsonAsync<List<User>>("/api/Users");
+			var lastUserInDb = res[res.Count-1];
+
 			//Assert
+			Assert.Equal(person.Name, lastUserInDb.Name);
 		}
 	}
 }
