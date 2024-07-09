@@ -19,10 +19,11 @@ namespace MyLibrary.Controllers
         public UsersController(MyLibraryContext context)
         {
             _context = context;
-        }
 
-        // GET: api/Users
-        [HttpGet]
+		}
+
+		// GET: api/Users
+		[HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
             return await _context.User.ToListAsync();
@@ -104,5 +105,8 @@ namespace MyLibrary.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
-    }
+
+
+
+	}
 }

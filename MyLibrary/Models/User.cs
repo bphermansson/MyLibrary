@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyLibrary.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyLibrary.Models
 {
-    public class User
+    public class User:iUser
     {
         [Key]
         public int Id { get; set; }
