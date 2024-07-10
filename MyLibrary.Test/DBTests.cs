@@ -9,37 +9,37 @@ using System.Text.Json;
 
 namespace MyLibrary.Test
 {
-	public class UnitTest1 : IDisposable
+	public class DBTests
 	{
-		private static DbContextOptions<MyLibraryContext> dbContextOptions = new DbContextOptionsBuilder<MyLibraryContext>()
-		.UseInMemoryDatabase(databaseName: "LibraryDb")
-		.Options;
+		//private static DbContextOptions<MyLibraryContext> dbContextOptions = new DbContextOptionsBuilder<MyLibraryContext>()
+		//.UseInMemoryDatabase(databaseName: "LibraryDb")
+		//.Options;
 
-		MyLibraryContext context;
+		//MyLibraryContext context;
 
-		public UnitTest1()
-		{
-			context = new MyLibraryContext(dbContextOptions);
-			context.Database.EnsureCreated();
-		}
-		private void SeedDatabase()
-		{
-			List<Models.User> mockusers = new List<Models.User>()
-			{
-				new Models.User()
-				{
-					Id=1,
-					Name="Nils"
-				},
-				new Models.User()
-				{
-					Id=2,
-					Name="Pelle"
-				}
-			};
-			context.User.AddRange(mockusers);
-			context.SaveChanges();
-		}
+		//public DBTests()
+		//{
+		//	context = new MyLibraryContext(dbContextOptions);
+		//	context.Database.EnsureCreated();
+		//}
+		//private void SeedDatabase()
+		//{
+		//	List<Models.User> mockusers = new List<Models.User>()
+		//	{
+		//		new Models.User()
+		//		{
+		//			Id=1,
+		//			Name="Nils"
+		//		},
+		//		new Models.User()
+		//		{
+		//			Id=2,
+		//			Name="Pelle"
+		//		}
+		//	};
+		//	context.User.AddRange(mockusers);
+		//	context.SaveChanges();
+		//}
 
 		[Fact]
 		public async Task AddNameAndReadItBack()
@@ -47,7 +47,7 @@ namespace MyLibrary.Test
 			//Arrange
 			HttpClient client = new HttpClient();
 			client.BaseAddress = new Uri("https://localhost:7034/");
-			var person = new User() { Name = "Liam Bond" };
+			var person = new User() { Name = "James Bond" };
 			var payload = JsonSerializer.Serialize(person);
 			var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
@@ -77,10 +77,20 @@ namespace MyLibrary.Test
 			// Assert
 			Assert.Equal("Patrik", user.Name);
 		}
-
-		public void Dispose()
+		[Fact]
+		public async Task SearchForABookWithKingInTheTitleOrInTheAuthorsName()
 		{
-			context.Database.EnsureDeleted();
+			// Arrange
+			HttpClient client = new HttpClient();
+			client.BaseAddress = new Uri("https://localhost:7034/");
+			
+			// Act
+			await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+			client = application.CreateClient();
+			var allBooks = await client.GetFromJsonAsync < List<Models.Book>>("api/Books");
+
+			// Assert
+			Assert.Equal("Patrik", allBooks[0].Name);
 		}
 	}
 }

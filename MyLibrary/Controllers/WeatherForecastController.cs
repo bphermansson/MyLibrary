@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using MyLibrary.Models;
 
 namespace MyLibrary.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
