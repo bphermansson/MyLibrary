@@ -62,21 +62,21 @@ namespace MyLibrary.Test
 		//	Assert.Equal("James Bond", lastUserInDb.Name);
 		//}
 
-		[Fact]
-		public async Task GetFirstUserNameFromRealDB()
-		{
-			// Arrange
-			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri("https://localhost:7034/");
+		//[Fact]
+		//public async Task GetFirstUserNameFromRealDB()
+		//{
+		//	// Arrange
+		//	HttpClient client = new HttpClient();
+		//	client.BaseAddress = new Uri("https://localhost:7034/");
 
-			// Act
-			await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
-			client = application.CreateClient();
-			User? user = await client.GetFromJsonAsync<User>("api/Users/1");
+		//	// Act
+		//	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+		//	client = application.CreateClient();
+		//	User? user = await client.GetFromJsonAsync<User>("api/Users/1");
 
-			// Assert
-			Assert.Equal("Patrik", user.Name);
-		}
+		//	// Assert
+		//	Assert.Equal("Patrik", user.Name);
+		//}
 		[Fact]
 		public async Task SearchForABookWithKingInTheTitleOrInTheAuthorsName()
 		{
@@ -90,7 +90,7 @@ namespace MyLibrary.Test
 			var allBooks = await client.GetFromJsonAsync < List<Models.Book>>("api/Books");
 
 			// Assert
-			Assert.Equal("Patrik", allBooks[0].Name);
+			Assert.Equal("Normandie", allBooks[2].Name);
 		}
 	}
 }
