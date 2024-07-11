@@ -11,8 +11,8 @@ using MyLibrary.Data;
 namespace MyLibrary.Migrations
 {
     [DbContext(typeof(MyLibraryContext))]
-    [Migration("20240709153820_Add books table")]
-    partial class Addbookstable
+    [Migration("20240711135238_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,11 +26,11 @@ namespace MyLibrary.Migrations
 
             modelBuilder.Entity("MyLibrary.Models.Book", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -40,9 +40,47 @@ namespace MyLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BookId");
 
                     b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            BookId = 1,
+                            Author = "Stephen King",
+                            Name = "Det"
+                        },
+                        new
+                        {
+                            BookId = 2,
+                            Author = "Anders Johansson",
+                            Name = "Trumslagarpojken"
+                        },
+                        new
+                        {
+                            BookId = 3,
+                            Author = "Anthony Beevor",
+                            Name = "Normandie"
+                        },
+                        new
+                        {
+                            BookId = 4,
+                            Author = "Stephen King",
+                            Name = "Det"
+                        },
+                        new
+                        {
+                            BookId = 5,
+                            Author = "Samuel Becket",
+                            Name = "I väntan på Godot"
+                        },
+                        new
+                        {
+                            BookId = 6,
+                            Author = "August Strindberg",
+                            Name = "Röda rummet"
+                        });
                 });
 
             modelBuilder.Entity("MyLibrary.Models.User", b =>

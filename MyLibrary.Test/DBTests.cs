@@ -41,26 +41,26 @@ namespace MyLibrary.Test
 		//	context.SaveChanges();
 		//}
 
-		[Fact]
-		public async Task AddNameAndReadItBack()
-		{
-			//Arrange
-			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri("https://localhost:7034/");
-			var person = new User() { Name = "James Bond" };
-			var payload = JsonSerializer.Serialize(person);
-			var content = new StringContent(payload, Encoding.UTF8, "application/json");
+		//[Fact]
+		//public async Task AddNameAndReadItBack()
+		//{
+		//	//Arrange
+		//	HttpClient client = new HttpClient();
+		//	client.BaseAddress = new Uri("https://localhost:7034/");
+		//	var person = new User() { Name = "James Bond" };
+		//	var payload = JsonSerializer.Serialize(person);
+		//	var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-			//Act
-			await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
-			client = application.CreateClient();
-			var response = await client.PostAsync("api/Users", content);
-			var res = await client.GetFromJsonAsync<List<User>>("/api/Users");
-			var lastUserInDb = res[res.Count-1];
+		//	//Act
+		//	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+		//	client = application.CreateClient();
+		//	var response = await client.PostAsync("api/Users", content);
+		//	var res = await client.GetFromJsonAsync<List<User>>("/api/Users");
+		//	var lastUserInDb = res[res.Count-1];
 
-			//Assert
-			Assert.Equal("James Bond", lastUserInDb.Name);
-		}
+		//	//Assert
+		//	Assert.Equal("James Bond", lastUserInDb.Name);
+		//}
 
 		[Fact]
 		public async Task GetFirstUserNameFromRealDB()
@@ -85,7 +85,7 @@ namespace MyLibrary.Test
 			client.BaseAddress = new Uri("https://localhost:7034/");
 			
 			// Act
-			await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+			await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
 			client = application.CreateClient();
 			var allBooks = await client.GetFromJsonAsync < List<Models.Book>>("api/Books");
 

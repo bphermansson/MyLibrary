@@ -5,4 +5,7 @@ client.BaseAddress = new Uri("https://localhost:7034/");
 HttpResponseMessage message = client.GetAsync("api/Users").Result;
 string returnText = message.Content.ReadAsStringAsync().Result;
 Console.WriteLine(returnText);
+message = client.GetAsync("api/Books").Result;
+returnText = message.Content.ReadAsStringAsync().Result;
+Console.WriteLine(returnText);
 Console.ReadLine();

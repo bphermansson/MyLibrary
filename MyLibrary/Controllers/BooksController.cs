@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using MyLibrary.Data;
 using MyLibrary.Models;
+using Newtonsoft.Json;
 
 namespace MyLibrary.Controllers
 {
@@ -26,7 +27,8 @@ namespace MyLibrary.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
         {
-            return View(await _context.Book.ToListAsync());
+            string jsonData = JsonConvert.SerializeObject(await _context.Book.ToListAsync());
+            return Content(jsonData, "application/json");
         }
 
 		//GET: Books/Details/5
@@ -39,7 +41,7 @@ namespace MyLibrary.Controllers
             }
 
             var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.BookId == id);
             if (book == null)
             {
                 return NotFound();
@@ -177,7 +179,7 @@ namespace MyLibrary.Controllers
 
 		private bool BookExists(int id)
         {
-            return _context.Book.Any(e => e.Id == id);
+            return _context.Book.Any(e => e.BookId == id);
         }
     }
 }
