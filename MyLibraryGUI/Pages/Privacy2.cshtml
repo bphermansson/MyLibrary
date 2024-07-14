@@ -6,9 +6,6 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<h3>@ViewData["mess"]</h3>
-
-
 <table class="table">
     <thead>
     </thead>
@@ -19,17 +16,5 @@
                 @Html.DisplayFor(modelItem => item.Name)
         </td>
         }
-
-
-@*         @foreach (var item in ViewData["bookList"])
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                    <td style="border: 1px solid black; padding: 20px;">Cell 1</td>
-
-            </tr>
-        }; *@
     </tbody>
 </table> 
