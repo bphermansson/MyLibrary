@@ -50,25 +50,19 @@ namespace MyLibrary.Controllers
             return View(book);
         }
 
-		//GET: Books/Details
+		//GET: Books/{searchword}
 		[HttpGet("{searchword}")]
 		public async Task<IActionResult> Search(string? searchword)
 		{
-			//var book = await _context.Book
-			//	.FirstOrDefaultAsync(m => m.Id == id);
-
 			var book =  _context.Book
-				.Where(s => s.Name.Contains(searchword))
-				.Where(s => s.Author.Contains(searchword))
+				.Where(s => s.Name.Contains(searchword) || s.Author.Contains(searchword))
 				.ToList();
-
 			if (book == null)
 			{
 				return NotFound();
 			}
-
-			//return View(book);
-			return View(book);
+            string jsonData = JsonConvert.SerializeObject(book);
+            return Content(jsonData, "application/json");
 		}
 
 		// GET: Books/Create
