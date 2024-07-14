@@ -1,26 +1,28 @@
-﻿@page
+﻿@page "/ListAll"
 @using MyLibrary.GUI.Pages
 @model ListAllModel
 @{
-    ViewData["Title"] = "ListAll";
-
+    ViewData["Title"] = "Alla böcker";
 }
-
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
-
-@* <table class="table">
+<table class="table">
     <thead>
     </thead>
     <tbody>
-        @foreach (var item in Model.bookList)
-        {
-        <tr>
-            <td>
+        @foreach (var item in Model.Books)
+        {   
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookId)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Author)
-            </td>
-        </tr>
-        };
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
     </tbody>
-</table> *@
+</table> 

@@ -1,28 +1,20 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyLibrary.Models;
+using System.Text.Json;
 
 namespace MyLibrary.GUI.Pages
 {
     public class ListAllModel : PageModel
     {
-        public List<Book> bookList = new List<Book>();
-       // public IList<Book> Book { get => book; set => book = value; }
-
+        public IList<Book> Books { get; set; } = default!;
+        
         public void OnGet()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7034/");
-            HttpResponseMessage message = client.GetAsync("api/Users").Result;
+            HttpResponseMessage message = client.GetAsync("api/Books").Result;
             string returnText = message.Content.ReadAsStringAsync().Result;
-
-            message = client.GetAsync("api/Books").Result;
-            returnText = message.Content.ReadAsStringAsync().Result;
-
-            List<Book> bookList = new List<Book>();
-            bookList =
-                JsonSerializer.Deserialize<List<Book>>(returnText);
+            Books = JsonSerializer.Deserialize<List<Book>>(returnText);
         }
     }
 }

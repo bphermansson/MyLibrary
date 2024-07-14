@@ -5,9 +5,9 @@ namespace MyLibrary.GUI.Pages
 {
     public class PrivacyModel : PageModel
     {
-        private readonly ILogger<PrivacyModel2> _logger;
+        private readonly ILogger<ListAllModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel2> logger)
+        public PrivacyModel(ILogger<ListAllModel> logger)
         {
            // _logger = logger;
         }
