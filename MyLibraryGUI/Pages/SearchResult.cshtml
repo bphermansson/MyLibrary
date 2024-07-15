@@ -1,10 +1,11 @@
-﻿@page "/ListAll"
+﻿@page "/SearchResult"
 @using MyLibrary.GUI.Pages
-@model ListAllModel
+@model SearchModel
 @{
-    ViewData["Title"] = "Alla böcker";
+    ViewData["Title"] = "Sökresultat";
 }
 <h1>@ViewData["Title"]</h1>
+<h4>@TempData["Message"]</h4>
 
 <table class="table">
     <thead>
