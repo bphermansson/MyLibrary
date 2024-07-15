@@ -50,8 +50,6 @@ namespace MyLibraryGUI.Pages
         public IActionResult OnPost()
         {
             SearchString = Request.Form["SearchString"];
-            //SearchString = "Incorrect password";
-
             return RedirectToPage("/SearchResult");
         }
     }
