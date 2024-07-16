@@ -67,6 +67,23 @@ namespace MyLibrary.Controllers
         //GET: Books/Loans/{userid}
         [HttpGet("Loans/{userid}")]
 
+        public async Task<IActionResult> LoanBook(int bookid, int borrowerid)
+        {
+            //Change this
+            var book = _context.Book
+                .FirstOrDefault(s => s.BookId == bookid);
+
+            book.BorrowerId = borrowerid;
+            _context.SaveChanges();
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            string jsonData = JsonConvert.ToString("Ok");
+            return Content(jsonData, "application/json");
+        }
+
         public async Task<IActionResult> ListLoans(int userid)
         {
             var book = _context.Book
