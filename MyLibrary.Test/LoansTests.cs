@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace MyLibrary.Test
 {
@@ -7,6 +10,7 @@ namespace MyLibrary.Test
     {
         [Fact]
         public async Task HowManyBooksHaveAUserLend()
+        // Can return zero or more, but not null.
         {
             // Arrange
             HttpClient client = new HttpClient();
@@ -15,10 +19,42 @@ namespace MyLibrary.Test
             // Act
             await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
             client = application.CreateClient();
-            var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/King");
+            var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/Loans/1");
 
             // Assert
-            Assert.NotEmpty(allBooks);
+            Assert.NotNull(allBooks);
+        }
+        [Fact]
+        public async Task LoanABook()
+        {
+            // Arrange
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7034/");
+
+            // Act
+            await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
+            client = application.CreateClient();
+            //var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/LoanedOutBooks");
+            var res = await client.GetAsync("api/Books/Loans?userid=0");
+            Console.WriteLine(res);
+            
+            // Assert
+            Assert.NotNull(res);
+        }
+        [Fact]
+        public async Task TryingToLendALoanedOutBook()
+        {
+            // Can this be tested?
+            // Arrange
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7034/");
+
+            // Act
+            await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
+            client = application.CreateClient();
+            var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/LoanedOutBooks");
+
+            // Assert
         }
     }
 }
