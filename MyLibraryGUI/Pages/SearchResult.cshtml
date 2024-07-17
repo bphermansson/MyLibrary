@@ -1,5 +1,7 @@
 ﻿@page "/SearchResult"
 @using MyLibrary.GUI.Pages
+@using MyLibrary.GUI.Models
+
 @model SearchModel
 @{
     ViewData["Title"] = "Sökresultat";
@@ -24,8 +26,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @await Component.InvokeAsync("ShowLoanLink")
+                    @await Component.InvokeAsync("ShowLoanLink", new LoanClass { BookId = item.BookId, UserId = 1 })
                 </td>
+
             </tr>
         }
     </tbody>

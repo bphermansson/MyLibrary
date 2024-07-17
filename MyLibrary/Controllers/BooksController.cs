@@ -84,18 +84,18 @@ namespace MyLibrary.Controllers
             return Content(jsonData, "application/json");
         }
 
-        public async Task<IActionResult> ListLoans(int userid)
-        {
-            var book = _context.Book
-                .Where(s => s.BorrowerId == userid)
-                .ToList();
-            if (book == null)
-            {
-                return NotFound();
-            }
-            string jsonData = JsonConvert.SerializeObject(book);
-            return Content(jsonData, "application/json");
-        }
+        //public async Task<IActionResult> ListLoans(int userid)
+        //{
+        //    var book = _context.Book
+        //        .Where(s => s.BorrowerId == userid)
+        //        .ToList();
+        //    if (book == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    string jsonData = JsonConvert.SerializeObject(book);
+        //    return Content(jsonData, "application/json");
+        //}
 
 
         // GET: Books/Create
