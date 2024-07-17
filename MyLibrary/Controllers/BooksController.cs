@@ -31,27 +31,42 @@ namespace MyLibrary.Controllers
             return Content(jsonData, "application/json");
         }
 
-		////GET: Books/Details/5
-		//[HttpGet("{menuId}/getAllMenusItems")]
-		//public async Task<IActionResult> Details(int? id)
-  //      {
-  //          if (id == null)
-  //          {
-  //              return NotFound();
-  //          }
+        // GET: BookById/4
+        [HttpGet("BookById/{Id}")]
 
-  //          var book = await _context.Book
-  //              .FirstOrDefaultAsync(m => m.BookId == id);
-  //          if (book == null)
-  //          {
-  //              return NotFound();
-  //          }
+        public async Task<IActionResult> BookById(int Id)
+        {
+            var book = await _context.Book
+                .FirstOrDefaultAsync(m => m.BookId == Id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            string jsonData = JsonConvert.SerializeObject(book);
+            return Content(jsonData, "application/json");
+        }
 
-  //          return View(book);
-  //      }
+        ////GET: Books/Details/5
+        //[HttpGet("{menuId}/getAllMenusItems")]
+        //public async Task<IActionResult> Details(int? id)
+        //      {
+        //          if (id == null)
+        //          {
+        //              return NotFound();
+        //          }
 
-		//GET: Books/{searchword}
-		[HttpGet("{searchword}")]
+        //          var book = await _context.Book
+        //              .FirstOrDefaultAsync(m => m.BookId == id);
+        //          if (book == null)
+        //          {
+        //              return NotFound();
+        //          }
+
+        //          return View(book);
+        //      }
+
+        //GET: Books/{searchword}
+        [HttpGet("{searchword}")]
 		public async Task<IActionResult> Search(string? searchword)
 		{
 			var book =  _context.Book
@@ -64,12 +79,11 @@ namespace MyLibrary.Controllers
             string jsonData = JsonConvert.SerializeObject(book);
             return Content(jsonData, "application/json");
 		}
+        
         //GET: Books/Loan/{bookid}/{userid}
-        [HttpGet("Loans/{bookid}/{userid}")]
-
+        [HttpGet("LoanBook/{bookid}/{userid}")]
         public async Task<IActionResult> LoanBook(int bookid, int userid)
         {
-            //Change this
             var book = _context.Book
                 .FirstOrDefault(s => s.BookId == bookid);
 
@@ -84,6 +98,23 @@ namespace MyLibrary.Controllers
             return Content(jsonData, "application/json");
         }
 
+        //GET: Books/Return/{bookid}
+        [HttpGet("Return/{bookid}")]
+        public async Task<IActionResult> ReturnBook(int bookid)
+        {
+            var book = _context.Book
+                .FirstOrDefault(s => s.BookId == bookid);
+
+            book.BorrowerId = 0;
+            _context.SaveChanges();
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+            string jsonData = JsonConvert.ToString("Ok");
+            return Content(jsonData, "application/json");
+        }
         //public async Task<IActionResult> ListLoans(int userid)
         //{
         //    var book = _context.Book

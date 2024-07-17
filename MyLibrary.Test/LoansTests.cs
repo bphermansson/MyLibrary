@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using MyLibrary.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -34,8 +35,7 @@ namespace MyLibrary.Test
             // Act
             await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
             client = application.CreateClient();
-            //var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/LoanedOutBooks");
-            var res = await client.GetAsync("api/Books/Loans?userid=0");
+            var res = await client.GetAsync("api/Books/LoanBook/1/1");
             Console.WriteLine(res);
             
             // Assert

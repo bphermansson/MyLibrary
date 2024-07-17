@@ -11,73 +11,88 @@ namespace MyLibrary.Test
 {
 	public class DBTests
 	{
-		//private static DbContextOptions<MyLibraryContext> dbContextOptions = new DbContextOptionsBuilder<MyLibraryContext>()
-		//.UseInMemoryDatabase(databaseName: "LibraryDb")
-		//.Options;
+        //private static DbContextOptions<MyLibraryContext> dbContextOptions = new DbContextOptionsBuilder<MyLibraryContext>()
+        //.UseInMemoryDatabase(databaseName: "LibraryDb")
+        //.Options;
 
-		//MyLibraryContext context;
+        //MyLibraryContext context;
 
-		//public DBTests()
-		//{
-		//	context = new MyLibraryContext(dbContextOptions);
-		//	context.Database.EnsureCreated();
-		//}
-		//private void SeedDatabase()
-		//{
-		//	List<Models.User> mockusers = new List<Models.User>()
-		//	{
-		//		new Models.User()
-		//		{
-		//			Id=1,
-		//			Name="Nils"
-		//		},
-		//		new Models.User()
-		//		{
-		//			Id=2,
-		//			Name="Pelle"
-		//		}
-		//	};
-		//	context.User.AddRange(mockusers);
-		//	context.SaveChanges();
-		//}
+        //public DBTests()
+        //{
+        //	context = new MyLibraryContext(dbContextOptions);
+        //	context.Database.EnsureCreated();
+        //}
+        //private void SeedDatabase()
+        //{
+        //	List<Models.User> mockusers = new List<Models.User>()
+        //	{
+        //		new Models.User()
+        //		{
+        //			Id=1,
+        //			Name="Nils"
+        //		},
+        //		new Models.User()
+        //		{
+        //			Id=2,
+        //			Name="Pelle"
+        //		}
+        //	};
+        //	context.User.AddRange(mockusers);
+        //	context.SaveChanges();
+        //}
 
-		//[Fact]
-		//public async Task AddNameAndReadItBack()
-		//{
-		//	//Arrange
-		//	HttpClient client = new HttpClient();
-		//	client.BaseAddress = new Uri("https://localhost:7034/");
-		//	var person = new User() { Name = "James Bond" };
-		//	var payload = JsonSerializer.Serialize(person);
-		//	var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        //[Fact]
+        //public async Task AddNameAndReadItBack()
+        //{
+        //	//Arrange
+        //	HttpClient client = new HttpClient();
+        //	client.BaseAddress = new Uri("https://localhost:7034/");
+        //	var person = new User() { Name = "James Bond" };
+        //	var payload = JsonSerializer.Serialize(person);
+        //	var content = new StringContent(payload, Encoding.UTF8, "application/json");
 
-		//	//Act
-		//	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
-		//	client = application.CreateClient();
-		//	var response = await client.PostAsync("api/Users", content);
-		//	var res = await client.GetFromJsonAsync<List<User>>("/api/Users");
-		//	var lastUserInDb = res[res.Count-1];
+        //	//Act
+        //	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+        //	client = application.CreateClient();
+        //	var response = await client.PostAsync("api/Users", content);
+        //	var res = await client.GetFromJsonAsync<List<User>>("/api/Users");
+        //	var lastUserInDb = res[res.Count-1];
 
-		//	//Assert
-		//	Assert.Equal("James Bond", lastUserInDb.Name);
-		//}
+        //	//Assert
+        //	Assert.Equal("James Bond", lastUserInDb.Name);
+        //}
 
-		//[Fact]
-		//public async Task GetFirstUserNameFromRealDB()
-		//{
-		//	// Arrange
-		//	HttpClient client = new HttpClient();
-		//	client.BaseAddress = new Uri("https://localhost:7034/");
+        //[Fact]
+        //public async Task GetFirstUserNameFromRealDB()
+        //{
+        //	// Arrange
+        //	HttpClient client = new HttpClient();
+        //	client.BaseAddress = new Uri("https://localhost:7034/");
 
-		//	// Act
-		//	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
-		//	client = application.CreateClient();
-		//	User? user = await client.GetFromJsonAsync<User>("api/Users/1");
+        //	// Act
+        //	await using var application = new WebApplicationFactory<MyLibrary.Controllers.UsersController>();
+        //	client = application.CreateClient();
+        //	User? user = await client.GetFromJsonAsync<User>("api/Users/1");
 
-		//	// Assert
-		//	Assert.Equal("Patrik", user.Name);
-		//}
-		[Fact]
+        //	// Assert
+        //	Assert.Equal("Patrik", user.Name);
+        //}
+        [Fact]
+        public async Task SearchForABookWithIdThree()
+        {
+            // Arrange
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7034/");
+
+            // Act
+            await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
+            client = application.CreateClient();
+            var book = await client.GetFromJsonAsync<Models.Book>("api/Books/BookById/3");
+
+            // Assert
+            Assert.True(book != null);
+        }
+        [Fact]
 		public async Task SearchForABookWithKingInTheTitleOrInTheAuthorsName()
 		{
 			// Arrange
