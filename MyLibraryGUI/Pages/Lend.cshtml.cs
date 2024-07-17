@@ -9,10 +9,9 @@ namespace MyLibrary.GUI.Pages
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7034/");
-            Console.WriteLine(book);
-
-            //HttpResponseMessage message = client.GetAsync("api/Books/" + SearchString).Result;
-            //string returnText = message.Content.ReadAsStringAsync().Result;
+            //https://localhost:7034/api/Books/Loans/3/1
+            HttpResponseMessage message = client.GetAsync("api/Books/Loans/" + book + "/" + user).Result;
+            string returnText = message.Content.ReadAsStringAsync().Result;
         }
     }
 }

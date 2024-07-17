@@ -64,16 +64,16 @@ namespace MyLibrary.Controllers
             string jsonData = JsonConvert.SerializeObject(book);
             return Content(jsonData, "application/json");
 		}
-        //GET: Books/Loans/{userid}
-        [HttpGet("Loans/{userid}")]
+        //GET: Books/Loan/{bookid}/{userid}
+        [HttpGet("Loans/{bookid}/{userid}")]
 
-        public async Task<IActionResult> LoanBook(int bookid, int borrowerid)
+        public async Task<IActionResult> LoanBook(int bookid, int userid)
         {
             //Change this
             var book = _context.Book
                 .FirstOrDefault(s => s.BookId == bookid);
 
-            book.BorrowerId = borrowerid;
+            book.BorrowerId = userid;
             _context.SaveChanges();
 
             if (book == null)
