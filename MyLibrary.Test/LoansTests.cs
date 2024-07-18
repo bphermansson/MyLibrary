@@ -36,11 +36,28 @@ namespace MyLibrary.Test
             await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
             client = application.CreateClient();
             var res = await client.GetAsync("api/Books/LoanBook/1/1");
-            Console.WriteLine(res);
             
             // Assert
             Assert.Equal(res.IsSuccessStatusCode, true);
         }
+
+        [Fact]
+        public async Task CheckWhatBooksAUserhasLoaned()
+        {
+            // Arrange
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7034/");
+            await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
+            client = application.CreateClient();
+            var res = await client.GetAsync("api/Books/LoanBook/1/99");
+
+            // Act
+            res = await client.GetAsync("api/Books/Loans/99");
+
+            // Assert
+            Assert.Equal(res.IsSuccessStatusCode, true);
+        }
+
         [Fact]
         public async Task TryingToLendALoanedOutBook()
         {

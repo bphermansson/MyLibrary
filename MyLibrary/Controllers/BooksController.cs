@@ -79,7 +79,21 @@ namespace MyLibrary.Controllers
             string jsonData = JsonConvert.SerializeObject(book);
             return Content(jsonData, "application/json");
 		}
-        
+
+        //GET: Books/Loans/{userid}
+        [HttpGet("Loans/{userid}")]
+        public async Task<IActionResult> UserLoans(int userid)
+        {
+            var book = _context.Book
+                .Where(s => s.BorrowerId.Equals(userid))
+                .ToList();
+            if (book == null)
+            {
+                return NotFound();
+            }
+            string jsonData = JsonConvert.SerializeObject(book);
+            return Content(jsonData, "application/json");
+        }
         //GET: Books/Loan/{bookid}/{userid}
         [HttpGet("LoanBook/{bookid}/{userid}")]
         public async Task<IActionResult> LoanBook(int bookid, int userid)
