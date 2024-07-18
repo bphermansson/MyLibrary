@@ -1,0 +1,31 @@
+﻿@page "/UserLoans"
+@using MyLibrary.GUI.Pages
+@using MyLibrary.GUI.Models
+@model UsersLoansModel
+@{
+    ViewData["Title"] = "Användarens lån";
+}
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <thead>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @await Component.InvokeAsync("ShowLoanLink", new LoanClass { BookId = item.BookId, UserId = 1 })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 

@@ -1,0 +1,39 @@
+﻿@page "/ListUsersLoan"
+@using MyLibrary.GUI.Pages
+@using MyLibrary.GUI.Models
+@model ListUsersLoanModel
+@{
+    ViewData["Title"] = "Alla lån";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if(Model.Books.Count != 0)
+{
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Books)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @await Component.InvokeAsync("ShowReturnLink", new LoanClass { BookId = item.BookId, UserId = 1 })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Inga lån.</p>
+}
