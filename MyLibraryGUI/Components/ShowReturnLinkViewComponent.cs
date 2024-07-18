@@ -11,8 +11,6 @@ namespace MyLibrary.Components
             linkClass.Text = "Lämna tillbaka";
             linkClass.Url = "/Return";
             linkClass.Bookid = loanClass.BookId;
-            //linkClass.Borrowerid = loanClass.UserId;
-
             return View("Default", linkClass);
         }
     }

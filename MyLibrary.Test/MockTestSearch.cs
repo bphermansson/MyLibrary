@@ -15,7 +15,6 @@ namespace MyLibrary.Test
 		{
 			context = new MyLibraryContext(dbContextOptions);
 			context.Database.EnsureCreated();
-			
 		}
 
 		[Fact]
@@ -67,11 +66,8 @@ namespace MyLibrary.Test
 				}
 
 			};
-			//if (mockbooks.Count == 0)
-			//{
-				context.Book.AddRange(mockbooks);
-				context.SaveChanges();
-			//}
+			context.Book.AddRange(mockbooks);
+			context.SaveChanges();
 		}
 		public void Dispose()
 		{

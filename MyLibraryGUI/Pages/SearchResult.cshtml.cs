@@ -9,7 +9,6 @@ namespace MyLibrary.GUI.Pages
     {
         [BindProperty(SupportsGet = true)]
         public IList<Book> Books { get; set; } = default!;
-
         public void OnGet()
         {
             var SearchString = TempData["SearchString"];

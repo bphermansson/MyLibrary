@@ -58,20 +58,21 @@ namespace MyLibrary.Test
             Assert.Equal(res.IsSuccessStatusCode, true);
         }
 
-        [Fact]
-        public async Task TryingToLendALoanedOutBook()
-        {
-            // Can this be tested?
-            // Arrange
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7034/");
+        //[Fact]
+        //public async Task TryingToLendALoanedOutBook()
+        //{
+        //    // Can this be tested? Anyway, there are no lock in the code for this.
+        //    // Arrange
+        //    HttpClient client = new HttpClient();
+        //    client.BaseAddress = new Uri("https://localhost:7034/");
 
-            // Act
-            await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
-            client = application.CreateClient();
-            var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/LoanedOutBooks");
+        //    // Act
+        //    await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
+        //    client = application.CreateClient();
+        //    var allBooks = await client.GetFromJsonAsync<List<Models.Book>>("api/Books/LoanedOutBooks");
 
-            // Assert
-        }
+        //    // Assert
+        //    // ?
+        //}
     }
 }
