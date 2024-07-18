@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,15 +16,16 @@ namespace MyLibrary.Test
             // Arrange
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7034/");
-
-            // Act
             await using var application = new WebApplicationFactory<MyLibrary.Controllers.BooksController>();
             client = application.CreateClient();
-            var res = await client.GetAsync("api/Books/LoanBook?bookid=2&userid=1");    // Lend book 2
-            res = await client.GetAsync("api/Books/ReturnBook?bookid=1");    // Return book 1
+            var res = await client.GetAsync("api/Books/LoanBook/2/1");    // Lend book 2
+                                                                          
+            // Act
+            res = await client.GetAsync("api/Books/ReturnBook/2");    // Return book 2
 
+            var book = await client.GetFromJsonAsync<Models.Book>("api/Books/BookById/2");
             // Assert
-            Assert.NotNull(res);
+            Assert.Equal(0, book.BorrowerId);
         }
     }
 }

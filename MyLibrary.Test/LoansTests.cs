@@ -39,7 +39,7 @@ namespace MyLibrary.Test
             Console.WriteLine(res);
             
             // Assert
-            Assert.NotNull(res);
+            Assert.Equal(res.IsSuccessStatusCode, true);
         }
         [Fact]
         public async Task TryingToLendALoanedOutBook()

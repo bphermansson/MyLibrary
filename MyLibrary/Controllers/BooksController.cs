@@ -99,7 +99,7 @@ namespace MyLibrary.Controllers
         }
 
         //GET: Books/Return/{bookid}
-        [HttpGet("Return/{bookid}")]
+        [HttpGet("ReturnBook/{bookid}")]
         public async Task<IActionResult> ReturnBook(int bookid)
         {
             var book = _context.Book
